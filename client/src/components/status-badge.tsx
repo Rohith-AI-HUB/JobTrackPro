@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface StatusBadgeProps {
-  status: "applied" | "interviewing" | "offer" | "rejected";
+  status: "applied" | "interviewing" | "offer" | "rejected" | "Not Taking" | "Viewed Resume";
   className?: string;
 }
 
@@ -23,9 +23,17 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
       label: "Rejected",
       className: "bg-red-100 text-red-800",
     },
+    Not_Taking: {
+      label: "Not Taking",
+      className: "bg-gray-100 text-gray-800",
+    },
+    Viewed_Resume: {
+      label: "Viewed Resume",
+      className: "bg-purple-100 text-purple-800",
+    },
   };
 
-  const config = statusConfig[status];
+  const config = statusConfig[status.replace(" ", "_") as keyof typeof statusConfig];
 
   return (
     <span

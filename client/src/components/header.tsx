@@ -16,15 +16,6 @@ export default function Header() {
           <a href="#" className="text-primary font-medium border-b-2 border-primary pb-4">
             Dashboard
           </a>
-          <a href="#" className="text-gray-600 hover:text-text-dark pb-4">
-            Applications
-          </a>
-          <a href="#" className="text-gray-600 hover:text-text-dark pb-4">
-            Analytics
-          </a>
-          <a href="#" className="text-gray-600 hover:text-text-dark pb-4">
-            Settings
-          </a>
         </nav>
         
         <div className="flex items-center space-x-4">
@@ -32,7 +23,7 @@ export default function Header() {
             <Bell className="w-4 h-4" />
           </Button>
           <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-sm font-medium text-gray-700">JD</span>
+            <span className="text-sm font-medium text-gray-700">RB</span>
           </div>
         </div>
       </div>

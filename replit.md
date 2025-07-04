@@ -113,6 +113,7 @@ JobTracker is a full-stack web application for managing job applications. It pro
 
 ## Changelog
 - July 04, 2025. Initial setup
+- July 04, 2025. MongoDB integration with Docker Compose setup added
 
 ## User Preferences
 
