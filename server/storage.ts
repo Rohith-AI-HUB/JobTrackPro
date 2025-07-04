@@ -34,7 +34,7 @@ export class MemStorage implements IStorage {
         jobTitle: "Senior Frontend Developer",
         company: "Google",
         location: "San Francisco, CA",
-        applicationDate: "2023-12-15",
+        applicationDate: "2025-07-01",
         status: "interviewing",
         jobUrl: "https://careers.google.com/jobs/123",
         notes: "Great opportunity, team seems friendly"
@@ -43,7 +43,7 @@ export class MemStorage implements IStorage {
         jobTitle: "Product Manager",
         company: "Apple",
         location: "New York, NY", 
-        applicationDate: "2023-12-12",
+        applicationDate: "2025-06-28",
         status: "offer",
         jobUrl: "https://jobs.apple.com/pm-role",
         notes: "Received offer, considering options"
@@ -52,7 +52,7 @@ export class MemStorage implements IStorage {
         jobTitle: "UX Designer",
         company: "Microsoft",
         location: "Seattle, WA",
-        applicationDate: "2023-12-10", 
+        applicationDate: "2025-06-25", 
         status: "applied",
         jobUrl: "https://careers.microsoft.com/ux",
         notes: "Waiting for response"
@@ -61,7 +61,7 @@ export class MemStorage implements IStorage {
         jobTitle: "Software Engineer",
         company: "Spotify",
         location: "Austin, TX",
-        applicationDate: "2023-12-08",
+        applicationDate: "2025-06-20",
         status: "rejected",
         jobUrl: "https://www.lifeatspotify.com/jobs",
         notes: "Not a good fit according to feedback"

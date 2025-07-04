@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Search, Plus, Eye, Edit, Trash2 } from "lucide-react";
+import { Search, Plus, Edit, Trash2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import StatusBadge from "@/components/status-badge";
+import EditApplicationModal from "@/components/edit-application-modal";
 import { formatDate, getCompanyInitials } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -28,8 +29,9 @@ export default function ApplicationTable({
 }: ApplicationTableProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [editingApplication, setEditingApplication] = useState<Application | null>(null);
 
-  const { data: applications, isLoading } = useQuery<Application[]>({
+  const { data: rawApplications, isLoading } = useQuery<Application[]>({
     queryKey: ["/api/applications", { search: searchQuery, status: statusFilter }],
     queryFn: () => {
       const params = new URLSearchParams();
@@ -40,6 +42,11 @@ export default function ApplicationTable({
       return fetch(url, { credentials: "include" }).then(res => res.json());
     },
   });
+
+  // Sort applications by application date (recent first)
+  const applications = rawApplications?.sort((a, b) => 
+    new Date(b.applicationDate).getTime() - new Date(a.applicationDate).getTime()
+  );
 
   const deleteApplicationMutation = useMutation({
     mutationFn: (id: number) => apiRequest("DELETE", `/api/applications/${id}`),
@@ -186,10 +193,11 @@ export default function ApplicationTable({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-3">
-                      <Button variant="ghost" size="sm">
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => setEditingApplication(application)}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
                       <Button
@@ -223,6 +231,12 @@ export default function ApplicationTable({
           </div>
         </div>
       )}
+
+      <EditApplicationModal
+        isOpen={!!editingApplication}
+        onClose={() => setEditingApplication(null)}
+        application={editingApplication}
+      />
     </Card>
   );
 }
