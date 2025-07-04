@@ -18,7 +18,16 @@ export const insertApplicationSchema = createInsertSchema(applications).omit({
 });
 
 export type InsertApplication = z.infer<typeof insertApplicationSchema>;
-export type Application = typeof applications.$inferSelect;
+export type Application = {
+  id: string; // Changed to string for MongoDB compatibility
+  jobTitle: string;
+  company: string;
+  location: string | null;
+  applicationDate: string;
+  status: "applied" | "interviewing" | "offer" | "rejected";
+  jobUrl: string | null;
+  notes: string | null;
+};
 
 // For backward compatibility with existing user schema
 export const users = pgTable("users", {

@@ -1,8 +1,22 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { MongoDBStorage } from "./mongodb-storage";
+import { MemStorage } from "./storage";
 import { insertApplicationSchema } from "@shared/schema";
 import { z } from "zod";
+
+// Try to use MongoDB, fallback to memory storage if MongoDB is not available
+let storage: MongoDBStorage | MemStorage;
+
+export function initializeStorage(useMemoryFallback = false) {
+  if (useMemoryFallback) {
+    console.log('🔄 Using in-memory storage as fallback');
+    storage = new MemStorage();
+  } else {
+    storage = new MongoDBStorage();
+  }
+  return storage;
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all applications
@@ -28,7 +42,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get single application
   app.get("/api/applications/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const application = await storage.getApplication(id);
       
       if (!application) {
@@ -58,7 +72,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update application
   app.patch("/api/applications/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const updates = insertApplicationSchema.partial().parse(req.body);
       
       const application = await storage.updateApplication(id, updates);
@@ -79,7 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Delete application
   app.delete("/api/applications/:id", async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const deleted = await storage.deleteApplication(id);
       
       if (!deleted) {

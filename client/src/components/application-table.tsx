@@ -49,7 +49,7 @@ export default function ApplicationTable({
   );
 
   const deleteApplicationMutation = useMutation({
-    mutationFn: (id: number) => apiRequest("DELETE", `/api/applications/${id}`),
+    mutationFn: (id: string) => apiRequest("DELETE", `/api/applications/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/applications"] });
       queryClient.invalidateQueries({ queryKey: ["/api/dashboard/stats"] });
@@ -67,7 +67,7 @@ export default function ApplicationTable({
     },
   });
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     if (confirm("Are you sure you want to delete this application?")) {
       deleteApplicationMutation.mutate(id);
     }
