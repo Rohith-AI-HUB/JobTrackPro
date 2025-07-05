@@ -103,7 +103,7 @@ export default function AddApplicationModal({ isOpen, onClose }: AddApplicationM
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. San Francisco, CA" {...field} />
+                    <Input placeholder="e.g. San Francisco, CA" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -155,7 +155,7 @@ export default function AddApplicationModal({ isOpen, onClose }: AddApplicationM
                 <FormItem>
                   <FormLabel>Job Description URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://..." type="url" {...field} />
+                    <Input placeholder="https://..." type="url" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -173,6 +173,7 @@ export default function AddApplicationModal({ isOpen, onClose }: AddApplicationM
                       placeholder="Any additional notes about this application..."
                       rows={3}
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage />
