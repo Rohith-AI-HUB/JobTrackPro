@@ -9,24 +9,28 @@ This guide explains how to run the JobTracker application using Docker and Docke
 
 ## Quick Start
 
-### Option 1: Development Environment (Recommended for Local Development)
+#### Option 1: Development Environment (Recommended for Local Development)
 
-Run only MongoDB with Docker, while running the app locally for hot-reload:
+Run the app locally for hot-reload:
 
 ```bash
-# Start MongoDB and Mongo Express
-docker-compose -f docker-compose.dev.yml up -d
-
 # Install dependencies and start the app locally
 npm install
 npm run dev
+```
+
+To use MongoDB Atlas, you'll need to create a `.env` file in the project root with the following content:
+
+```env
+MONGODB_URL=<your-atlas-connection-string>
+NODE_ENV=development
 ```
 
 Your application will be available at:
 - **JobTracker App**: http://localhost:5000
 - **Mongo Express** (Database UI): http://localhost:8081
 
-### Option 2: Full Production Environment
+#### Option 2: Full Production Environment
 
 Run everything in containers:
 
@@ -147,10 +151,10 @@ db.applications.find().pretty()
 ## Development Workflow
 
 ### For Local Development (Recommended)
-1. Start MongoDB with Docker: `docker-compose -f docker-compose.dev.yml up -d`
+1. Create a `.env` file with your MongoDB Atlas connection string
 2. Run the app locally: `npm run dev`
 3. Make changes and see instant hot-reload
-4. Use Mongo Express at http://localhost:8081 to view database
+4. Use MongoDB Atlas UI to view database
 
 ### For Production Testing
 1. Start everything: `docker-compose up --build -d`
@@ -216,12 +220,12 @@ jobtracker/
 
 ### From Host Machine
 ```
-mongodb://admin:password@localhost:27017/jobtracker?authSource=admin
+<your-atlas-connection-string>
 ```
 
 ### From Within Docker Network
 ```
-mongodb://admin:password@mongodb:27017/jobtracker?authSource=admin
+<your-atlas-connection-string>
 ```
 
 ## Security Notes

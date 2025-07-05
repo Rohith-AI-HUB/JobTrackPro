@@ -24,11 +24,15 @@ export const ApplicationModel = mongoose.model('Application', applicationSchema)
 // Connection function
 export async function connectToMongoDB() {
   try {
-    // MongoDB Compass default connection string (local MongoDB instance)
-    const mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/jobtracker';
+    // Use the connection string from environment variables
+    const mongoUrl = process.env.MONGODB_URL;
     
+    if (!mongoUrl) {
+      throw new Error('MONGODB_URL is not defined in environment variables');
+    }
+
     await mongoose.connect(mongoUrl);
-    console.log('✅ Connected to MongoDB');
+    console.log('✅ Connected to MongoDB Atlas');
     
     // Seed data if collection is empty
     await seedDataIfEmpty();
